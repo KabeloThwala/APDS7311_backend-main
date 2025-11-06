@@ -1,69 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --bg: #0b1020;
-  --card: #141b2e;
-  --muted: #8aa0c6;
-  --brand: #39c6b3;
-  --danger: #ef476f;
-  --success: #50fa7b;
-  --warning: #ffd166;
-  --text: #e9eefc;
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply min-h-screen bg-slate-100 text-slate-800 antialiased transition-colors duration-500 ease-out;
+    background-image:
+      radial-gradient(1200px 800px at 15% 5%, rgba(56, 189, 248, 0.15), transparent 65%),
+      radial-gradient(900px 600px at 85% 0%, rgba(129, 140, 248, 0.14), transparent 60%),
+      radial-gradient(800px 600px at 50% 100%, rgba(16, 185, 129, 0.12), transparent 65%),
+      linear-gradient(135deg, #f6f9ff 0%, #eef2ff 45%, #f4f7ff 100%);
+  }
+
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+    background-image:
+      radial-gradient(1200px 800px at 15% 5%, rgba(56, 189, 248, 0.18), transparent 60%),
+      radial-gradient(900px 600px at 85% 0%, rgba(45, 212, 191, 0.18), transparent 55%),
+      radial-gradient(800px 600px at 50% 100%, rgba(168, 85, 247, 0.12), transparent 65%),
+      linear-gradient(130deg, #050910, #0b1020 45%, #050910 100%);
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
 }
 
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; }
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text);
-  background: radial-gradient(1000px 600px at 20% 0%, #14203b 0%, transparent 60%),
-              radial-gradient(800px 600px at 100% 10%, #0a3d5e 0%, transparent 55%),
-              var(--bg);
+@layer components {
+  .glass-card {
+    @apply relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/70 text-slate-900 shadow-xl shadow-slate-200/70 backdrop-blur-xl transition dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:shadow-slate-950/40;
+  }
+
+  .glass-panel {
+    @apply rounded-3xl border border-slate-200/60 bg-white/75 text-slate-900 shadow-xl shadow-slate-200/60 backdrop-blur-2xl transition dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:shadow-slate-950/50;
+  }
+
+  .glass-input {
+    @apply w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-base text-slate-900 placeholder:text-slate-500 shadow-sm transition focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300/60 dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:border-teal-400/70 dark:focus:ring-teal-300/50;
+  }
+
+  .glass-select {
+    @apply glass-input appearance-none pr-12;
+  }
+
+  .glass-label {
+    @apply text-sm font-medium text-slate-600 dark:text-slate-300;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-400 via-cyan-400 to-teal-400 px-5 py-3 font-semibold text-slate-900 shadow-lg shadow-sky-200/60 transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-sky-300/60 dark:shadow-glow dark:text-slate-900;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/70 px-5 py-3 font-semibold text-slate-700 shadow-sm transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-200/80 dark:border-white/20 dark:bg-white/5 dark:text-slate-100 dark:hover:bg-white/10 dark:focus:ring-white/30;
+  }
+
+  .status-badge {
+    @apply inline-flex min-w-[92px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-200;
+  }
 }
 
-a { color: var(--brand); text-decoration: none; }
-.container { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
-.sidebar {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border-right: 1px solid rgba(255,255,255,0.08);
-  padding: 22px;
+@layer utilities {
+  .frost-mask::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-white/40 opacity-70 mix-blend-overlay dark:from-white/20 dark:via-transparent dark:to-white/5;
+  }
 }
-.brand { font-weight: 800; letter-spacing: .02em; }
-.nav-btn {
-  width: 100%; text-align: left; padding: 10px 12px; margin: 6px 0;
-  background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px; color: var(--text); cursor: pointer;
-}
-.nav-btn.active { background: rgba(57,198,179,0.18); border-color: rgba(57,198,179,0.6); }
-.content { padding: 26px; }
-.card {
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px; padding: 18px; margin-bottom: 18px;
-}
-.grid { display: grid; gap: 16px; }
-.grid.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
-.grid.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
-label { display:block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-input, select, textarea {
-  width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12);
-  background: #0e1529; color: var(--text);
-}
-button.primary {
-  background: var(--brand); color: #06251f; font-weight: 700; border: 0; padding: 10px 14px;
-  border-radius: 10px; cursor: pointer;
-}
-button.ghost {
-  background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.12);
-  padding: 10px 14px; border-radius: 10px; cursor:pointer;
-}
-.table { width: 100%; border-collapse: collapse; }
-.table th, .table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; }
-.badge { padding: 4px 10px; border-radius: 999px; font-size: 12px; }
-.badge.pending { background: rgba(255,255,255,0.08); }
-.badge.verified { background: rgba(80,250,123,0.18); color: var(--success); }
-.badge.submitted { background: rgba(255,209,102,0.18); color: var(--warning); }
-.badge.rejected { background: rgba(239,71,111,0.18); color: var(--danger); }
-.form-row { margin-bottom: 12px; }
-.authbox { max-width: 420px; margin: 60px auto; }
-small.muted { color: var(--muted); }
