@@ -1,52 +1,111 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import api from '../utils/axiosClient'
 
-const nextStates = ['verified','submitted','rejected']
+const nextStates = ['verified', 'submitted', 'rejected']
+
+const statusColors = {
+  pending: 'bg-amber-500/20 text-amber-200',
+  verified: 'bg-emerald-500/20 text-emerald-200',
+  submitted: 'bg-sky-500/20 text-sky-100',
+  rejected: 'bg-rose-500/20 text-rose-200'
+}
 
 export default function PaymentsAdmin() {
   const [rows, setRows] = useState([])
-  const [msg, setMsg] = useState('')
+  const [feedback, setFeedback] = useState(null)
 
-  const load = () => api.get('/payments/all').then(r=>setRows(r.data||[])).catch(()=>{})
-  useEffect(()=>{ load() }, [])
+  const load = useCallback(() => api.get('/payments/all').then((r) => setRows(r.data || [])).catch(() => {}), [])
+
+  useEffect(() => {
+    load()
+  }, [load])
 
   const update = async (id, status) => {
-    setMsg('')
+    setFeedback(null)
     try {
       const { data } = await api.put(`/payments/${id}/status`, { status })
-      setMsg(data?.message || 'Updated')
+      setFeedback({ tone: 'success', text: data?.message || 'Status updated successfully.' })
       await load()
-    } catch (e) {
-      setMsg(e?.response?.data?.message || 'Failed to update')
+    } catch (error) {
+      setFeedback({ tone: 'error', text: error?.response?.data?.message || 'Failed to update status.' })
     }
   }
 
+  const counts = useMemo(() => ({
+    total: rows.length,
+    pending: rows.filter((row) => row.status === 'pending').length
+  }), [rows])
+
   return (
-    <div className="card">
-      <h3 style={{marginTop:0}}>All Payments</h3>
-      {msg && <div style={{marginBottom:10}}>{msg}</div>}
-      <table className="table">
-        <thead>
-          <tr><th>Date</th><th>User</th><th>Amount</th><th>Currency</th><th>Provider</th><th>Status</th><th>Action</th></tr>
-        </thead>
-        <tbody>
-          {rows.map(r => (
-            <tr key={r._id}>
-              <td>{new Date(r.createdAt).toLocaleString()}</td>
-              <td>{r.userId?.fullName} ({r.userId?.accountNumber})</td>
-              <td>{r.amount}</td>
-              <td>{r.currency}</td>
-              <td>{r.provider}</td>
-              <td><span className={`badge ${r.status}`}>{r.status}</span></td>
-              <td style={{display:'flex', gap:8}}>
-                {nextStates.map(s => (
-                  <button key={s} className="ghost" onClick={()=>update(r._id, s)}>{s}</button>
-                ))}
-              </td>
+    <div className="glass-card overflow-hidden">
+      <div className="flex flex-col gap-3 border-b border-white/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-white">All payments</h2>
+          <p className="text-sm text-slate-300">Control panel for cross-role payment lifecycle management.</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <span className="rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-slate-200">{counts.total} total</span>
+          <span className="rounded-full border border-amber-400/50 bg-amber-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-amber-100">{counts.pending} pending</span>
+        </div>
+      </div>
+
+      {feedback && (
+        <div className={`mx-6 mt-5 rounded-2xl border px-4 py-3 text-sm ${feedback.tone === 'success' ? 'border-emerald-400/50 bg-emerald-500/10 text-emerald-100' : 'border-rose-400/50 bg-rose-500/10 text-rose-100'}`}>
+          {feedback.text}
+        </div>
+      )}
+
+      <div className="overflow-x-auto px-6 py-5">
+        <table className="min-w-full divide-y divide-white/10 text-sm text-slate-200">
+          <thead className="text-xs uppercase tracking-widest text-slate-300/80">
+            <tr>
+              <th className="px-4 py-3 text-left">Date</th>
+              <th className="px-4 py-3 text-left">User</th>
+              <th className="px-4 py-3 text-left">Amount</th>
+              <th className="px-4 py-3 text-left">Currency</th>
+              <th className="px-4 py-3 text-left">Provider</th>
+              <th className="px-4 py-3 text-left">Status</th>
+              <th className="px-4 py-3 text-left">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-white/5">
+            {rows.length === 0 && (
+              <tr>
+                <td colSpan="7" className="px-4 py-8 text-center text-slate-300">No payments available.</td>
+              </tr>
+            )}
+            {rows.map((r) => (
+              <tr key={r._id} className="transition hover:bg-white/5">
+                <td className="px-4 py-4">{new Date(r.createdAt).toLocaleString()}</td>
+                <td className="px-4 py-4">
+                  <span className="font-semibold text-white">{r.userId?.fullName}</span>
+                  <span className="ml-2 text-xs text-slate-300">({r.userId?.accountNumber})</span>
+                </td>
+                <td className="px-4 py-4 font-semibold text-white">{r.amount}</td>
+                <td className="px-4 py-4">{r.currency}</td>
+                <td className="px-4 py-4">{r.provider}</td>
+                <td className="px-4 py-4">
+                  <span className={`status-badge ${statusColors[r.status] || 'bg-white/10 text-slate-200'}`}>{r.status}</span>
+                </td>
+                <td className="px-4 py-4">
+                  <div className="flex flex-wrap gap-2">
+                    {nextStates.map((state) => (
+                      <button
+                        key={state}
+                        type="button"
+                        className="secondary-button px-4 py-2 text-xs uppercase tracking-wider"
+                        onClick={() => update(r._id, state)}
+                      >
+                        {state}
+                      </button>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
