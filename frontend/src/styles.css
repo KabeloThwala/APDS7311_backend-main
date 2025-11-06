@@ -4,6 +4,31 @@
 
 @layer base {
   :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply min-h-screen bg-slate-100 text-slate-800 antialiased transition-colors duration-500 ease-out;
+    background-image:
+      radial-gradient(1200px 800px at 15% 5%, rgba(56, 189, 248, 0.15), transparent 65%),
+      radial-gradient(900px 600px at 85% 0%, rgba(129, 140, 248, 0.14), transparent 60%),
+      radial-gradient(800px 600px at 50% 100%, rgba(16, 185, 129, 0.12), transparent 65%),
+      linear-gradient(135deg, #f6f9ff 0%, #eef2ff 45%, #f4f7ff 100%);
+  }
+
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+    background-image:
+      radial-gradient(1200px 800px at 15% 5%, rgba(56, 189, 248, 0.18), transparent 60%),
+      radial-gradient(900px 600px at 85% 0%, rgba(45, 212, 191, 0.18), transparent 55%),
+      radial-gradient(800px 600px at 50% 100%, rgba(168, 85, 247, 0.12), transparent 65%),
+      linear-gradient(130deg, #050910, #0b1020 45%, #050910 100%);
+  }
+
     color-scheme: dark;
   }
 
@@ -23,6 +48,15 @@
 
 @layer components {
   .glass-card {
+    @apply relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/70 text-slate-900 shadow-xl shadow-slate-200/70 backdrop-blur-xl transition dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:shadow-slate-950/40;
+  }
+
+  .glass-panel {
+    @apply rounded-3xl border border-slate-200/60 bg-white/75 text-slate-900 shadow-xl shadow-slate-200/60 backdrop-blur-2xl transition dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:shadow-slate-950/50;
+  }
+
+  .glass-input {
+    @apply w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-base text-slate-900 placeholder:text-slate-500 shadow-sm transition focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300/60 dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:border-teal-400/70 dark:focus:ring-teal-300/50;
     @apply relative overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-2xl shadow-slate-950/40 backdrop-blur-xl;
   }
 
@@ -39,6 +73,19 @@
   }
 
   .glass-label {
+    @apply text-sm font-medium text-slate-600 dark:text-slate-300;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-400 via-cyan-400 to-teal-400 px-5 py-3 font-semibold text-slate-900 shadow-lg shadow-sky-200/60 transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-sky-300/60 dark:shadow-glow dark:text-slate-900;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/70 px-5 py-3 font-semibold text-slate-700 shadow-sm transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-200/80 dark:border-white/20 dark:bg-white/5 dark:text-slate-100 dark:hover:bg-white/10 dark:focus:ring-white/30;
+  }
+
+  .status-badge {
+    @apply inline-flex min-w-[92px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-200;
     @apply text-sm font-medium text-slate-300;
   }
 
@@ -58,6 +105,7 @@
 @layer utilities {
   .frost-mask::before {
     content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-white/40 opacity-70 mix-blend-overlay dark:from-white/20 dark:via-transparent dark:to-white/5;
     @apply absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/5 opacity-70 mix-blend-overlay;
   }
 }

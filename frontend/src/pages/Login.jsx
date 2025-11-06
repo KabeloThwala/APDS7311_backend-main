@@ -49,6 +49,13 @@ export default function Login() {
   return (
     <div className="flex w-full justify-center">
       <div className="glass-card relative w-full max-w-xl p-10">
+        <div className="absolute -right-10 top-0 h-32 w-32 rounded-full bg-sky-400/30 blur-3xl" aria-hidden="true" />
+        <div className="absolute -left-12 bottom-0 h-28 w-28 rounded-full bg-emerald-400/20 blur-3xl" aria-hidden="true" />
+        <div className="relative z-10 space-y-8">
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky-500 dark:text-cyan-200">Welcome back</p>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">Sign in to your account</h1>
+            <p className="text-sm text-slate-600 dark:text-slate-300">Access the digital banking workspace with secure, real-time insights.</p>
         <div className="absolute -right-10 top-0 h-32 w-32 rounded-full bg-cyan-400/40 blur-3xl" aria-hidden="true" />
         <div className="absolute -left-12 bottom-0 h-28 w-28 rounded-full bg-purple-500/30 blur-3xl" aria-hidden="true" />
         <div className="relative z-10 space-y-8">
@@ -76,6 +83,9 @@ export default function Login() {
                 inputMode="numeric"
                 aria-describedby="account-helper"
               />
+              <p id="account-helper" className="text-xs text-slate-500 dark:text-slate-400">{helpers.accountNumber}</p>
+              {formErrors.accountNumber && (
+                <p className="text-sm text-rose-500 dark:text-rose-300">{formErrors.accountNumber}</p>
               <p id="account-helper" className="text-xs text-slate-400">{helpers.accountNumber}</p>
               {formErrors.accountNumber && (
                 <p className="text-sm text-rose-300">{formErrors.accountNumber}</p>
@@ -98,6 +108,13 @@ export default function Login() {
                 autoComplete="current-password"
                 placeholder="••••••••"
               />
+              <p className="text-xs text-slate-500 dark:text-slate-400">{helpers.password}</p>
+              {formErrors.password && (
+                <p className="text-sm text-rose-500 dark:text-rose-300">{formErrors.password}</p>
+              )}
+            </div>
+
+            {error && <div className="rounded-2xl border border-rose-400/40 bg-rose-100/60 px-4 py-3 text-sm text-rose-600 dark:bg-rose-500/10 dark:text-rose-200">{error}</div>}
               <p className="text-xs text-slate-400">{helpers.password}</p>
               {formErrors.password && (
                 <p className="text-sm text-rose-300">{formErrors.password}</p>
@@ -110,6 +127,9 @@ export default function Login() {
               <button className="primary-button w-full sm:w-auto" disabled={loading} type="submit">
                 {loading ? 'Please wait…' : 'Sign in'}
               </button>
+              <span className="text-sm text-slate-600 dark:text-slate-300">
+                Need a customer account?{' '}
+                <Link to="/signup" className="font-semibold text-sky-500 hover:text-sky-400 dark:text-cyan-200 dark:hover:text-cyan-100">
               <span className="text-sm text-slate-300">
                 Need a customer account?{' '}
                 <Link to="/signup" className="font-semibold text-cyan-200 hover:text-cyan-100">

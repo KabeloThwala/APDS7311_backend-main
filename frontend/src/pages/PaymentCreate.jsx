@@ -65,6 +65,10 @@ export default function PaymentCreate() {
 
   return (
     <div className="glass-card overflow-hidden">
+      <div className="flex flex-col gap-3 border-b border-slate-200/60 px-8 py-6 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
+        <div>
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Create payment</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-300">Capture new outbound payments with full compliance metadata.</p>
       <div className="flex flex-col gap-3 border-b border-white/10 px-8 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-white">Create payment</h2>
@@ -98,6 +102,7 @@ export default function PaymentCreate() {
               onChange={onChange}
               placeholder="1500"
             />
+            {errors.amount && <p className="text-sm text-rose-500 dark:text-rose-300">{errors.amount}</p>}
             {errors.amount && <p className="text-sm text-rose-300">{errors.amount}</p>}
           </div>
 
@@ -115,6 +120,7 @@ export default function PaymentCreate() {
                   <option key={currency} value={currency}>{currency}</option>
                 ))}
               </select>
+              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-500 dark:text-slate-300">▾</span>
               <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-300">▾</span>
             </div>
           </div>
@@ -133,6 +139,7 @@ export default function PaymentCreate() {
                   <option key={provider.id} value={provider.id}>{provider.label}</option>
                 ))}
               </select>
+              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-500 dark:text-slate-300">▾</span>
               <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-300">▾</span>
             </div>
           </div>
@@ -148,6 +155,7 @@ export default function PaymentCreate() {
               placeholder="987654321"
               inputMode="numeric"
             />
+            {errors.recipientAccount && <p className="text-sm text-rose-500 dark:text-rose-300">{errors.recipientAccount}</p>}
             {errors.recipientAccount && <p className="text-sm text-rose-300">{errors.recipientAccount}</p>}
           </div>
 
@@ -162,6 +170,7 @@ export default function PaymentCreate() {
               placeholder="ABSAZAJJ"
               autoCapitalize="characters"
             />
+            {errors.swiftCode && <p className="text-sm text-rose-500 dark:text-rose-300">{errors.swiftCode}</p>}
             {errors.swiftCode && <p className="text-sm text-rose-300">{errors.swiftCode}</p>}
           </div>
 
@@ -175,6 +184,7 @@ export default function PaymentCreate() {
               onChange={onChange}
               placeholder="Payment for invoice 101"
             />
+            {errors.reference && <p className="text-sm text-rose-500 dark:text-rose-300">{errors.reference}</p>}
             {errors.reference && <p className="text-sm text-rose-300">{errors.reference}</p>}
           </div>
         </div>
@@ -183,6 +193,7 @@ export default function PaymentCreate() {
           <button className="primary-button w-full sm:w-auto" type="submit">
             Submit payment
           </button>
+          {msg && <p className="text-sm text-slate-600 dark:text-slate-200">{msg}</p>}
           {msg && <p className="text-sm text-slate-200">{msg}</p>}
         </div>
       </form>

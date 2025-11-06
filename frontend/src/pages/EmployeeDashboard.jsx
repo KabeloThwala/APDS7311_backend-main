@@ -38,6 +38,9 @@ export default function EmployeeDashboard() {
   return (
     <div className="space-y-8">
       <header className="space-y-2">
+        <p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky-500 dark:text-sky-200">Employee control room</p>
+        <h1 className="text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">Operational overview</h1>
+        <p className="max-w-2xl text-sm text-slate-600 dark:text-slate-300">Track workload across the verification pipeline and focus on payments that need attention.</p>
         <p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky-200">Employee control room</p>
         <h1 className="text-3xl font-black text-white sm:text-4xl">Operational overview</h1>
         <p className="max-w-2xl text-sm text-slate-300">Track workload across the verification pipeline and focus on payments that need attention.</p>
@@ -48,6 +51,12 @@ export default function EmployeeDashboard() {
           <div key={card.label} className="glass-card relative overflow-hidden p-6">
             <div className={`absolute inset-0 bg-gradient-to-br ${card.accent} opacity-60`} aria-hidden="true" />
             <div className="relative z-10 space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-600 dark:text-slate-200/80">{card.label}</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black text-slate-900 dark:text-white">{card.value}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-200/70">cases</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-200/80">{card.description}</p>
               <p className="text-xs font-semibold uppercase tracking-widest text-slate-200/80">{card.label}</p>
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-black text-white">{card.value}</span>
