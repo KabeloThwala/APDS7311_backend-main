@@ -27,6 +27,7 @@ function Shell({ children }) {
             type="button"
             onClick={() => setSidebarOpen(true)}
             className="fixed left-5 top-5 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-slate-300/70 bg-white/80 text-slate-600 shadow-lg backdrop-blur-lg transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-sky-300/60 dark:border-white/20 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-white/20 lg:hidden"
+            className="fixed left-5 top-5 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-slate-100 shadow-xl backdrop-blur-lg transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 lg:hidden"
             aria-label="Open navigation menu"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">

@@ -74,6 +74,13 @@ export default function Signup() {
             <p className="text-sm font-semibold uppercase tracking-[0.4em] text-emerald-500 dark:text-emerald-200">Create account</p>
             <h1 className="text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">Open your customer workspace</h1>
             <p className="text-sm text-slate-600 dark:text-slate-300">Modern tools to track payments, manage compliance and collaborate securely.</p>
+        <div className="absolute -top-6 right-6 h-32 w-32 rounded-full bg-emerald-400/30 blur-3xl" aria-hidden="true" />
+        <div className="absolute -bottom-10 left-12 h-36 w-36 rounded-full bg-sky-500/20 blur-3xl" aria-hidden="true" />
+        <div className="relative z-10 space-y-8">
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.4em] text-emerald-200">Create account</p>
+            <h1 className="text-3xl font-black text-white sm:text-4xl">Open your customer workspace</h1>
+            <p className="text-sm text-slate-300">Modern tools to track payments, manage compliance and collaborate securely.</p>
           </div>
 
           <form className="space-y-8" onSubmit={onSubmit} noValidate>
@@ -92,6 +99,8 @@ export default function Signup() {
                 />
                 <p className="text-xs text-slate-500 dark:text-slate-400">{helpers.fullName}</p>
                 {formErrors.fullName && <p className="text-sm text-rose-500 dark:text-rose-300">{formErrors.fullName}</p>}
+                <p className="text-xs text-slate-400">{helpers.fullName}</p>
+                {formErrors.fullName && <p className="text-sm text-rose-300">{formErrors.fullName}</p>}
               </div>
 
               <div className="space-y-1.5">
@@ -109,6 +118,8 @@ export default function Signup() {
                 />
                 <p className="text-xs text-slate-500 dark:text-slate-400">{helpers.idNumber}</p>
                 {formErrors.idNumber && <p className="text-sm text-rose-500 dark:text-rose-300">{formErrors.idNumber}</p>}
+                <p className="text-xs text-slate-400">{helpers.idNumber}</p>
+                {formErrors.idNumber && <p className="text-sm text-rose-300">{formErrors.idNumber}</p>}
               </div>
 
               <div className="space-y-1.5">
@@ -126,6 +137,8 @@ export default function Signup() {
                 />
                 <p className="text-xs text-slate-500 dark:text-slate-400">{helpers.accountNumber}</p>
                 {formErrors.accountNumber && <p className="text-sm text-rose-500 dark:text-rose-300">{formErrors.accountNumber}</p>}
+                <p className="text-xs text-slate-400">{helpers.accountNumber}</p>
+                {formErrors.accountNumber && <p className="text-sm text-rose-300">{formErrors.accountNumber}</p>}
               </div>
 
               <div className="space-y-1.5">
@@ -147,6 +160,12 @@ export default function Signup() {
             </div>
 
             {error && <div className="rounded-2xl border border-rose-400/40 bg-rose-100/70 px-4 py-3 text-sm text-rose-600 dark:bg-rose-500/10 dark:text-rose-200">{error}</div>}
+                <p className="text-xs text-slate-400">{helpers.password}</p>
+                {formErrors.password && <p className="text-sm text-rose-300">{formErrors.password}</p>}
+              </div>
+            </div>
+
+            {error && <div className="rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</div>}
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <button className="primary-button w-full sm:w-auto" type="submit" disabled={loading}>
@@ -155,6 +174,9 @@ export default function Signup() {
               <span className="text-sm text-slate-600 dark:text-slate-300">
                 Already have an account?{' '}
                 <Link to="/login" className="font-semibold text-emerald-500 hover:text-emerald-400 dark:text-emerald-200 dark:hover:text-emerald-100">
+              <span className="text-sm text-slate-300">
+                Already have an account?{' '}
+                <Link to="/login" className="font-semibold text-emerald-200 hover:text-emerald-100">
                   Sign in
                 </Link>
               </span>
