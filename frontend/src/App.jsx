@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Sidebar from './components/Sidebar.jsx'
+import ThemeToggle from './components/ThemeToggle.jsx'
 import RequireRole from './components/RequireRole.jsx'
 import { useAuth } from './context/AuthContext.jsx'
 
@@ -15,11 +16,32 @@ import PaymentsAdmin from './pages/PaymentsAdmin.jsx'
 
 function Shell({ children }) {
   const { user } = useAuth()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
   return (
-    <div className="container">
-      {user && <Sidebar />}
-      <main className="content">
-        {children}
+    <div className="relative flex min-h-screen w-full overflow-hidden">
+      {user && (
+        <>
+          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="fixed left-5 top-5 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-slate-300/70 bg-white/80 text-slate-600 shadow-lg backdrop-blur-lg transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-sky-300/60 dark:border-white/20 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-white/20 lg:hidden"
+            aria-label="Open navigation menu"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </>
+      )}
+      <div className="fixed right-5 top-5 z-30">
+        <ThemeToggle />
+      </div>
+      <main className="relative z-10 flex w-full flex-1 justify-center px-4 py-10 sm:px-8 lg:px-12">
+        <div className="flex w-full max-w-6xl flex-col gap-8">
+          {children}
+        </div>
       </main>
     </div>
   )
@@ -68,7 +90,7 @@ export default function App() {
       }/>
 
       <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="*" element={<Shell><div className="card">Not found</div></Shell>} />
+      <Route path="*" element={<Shell><div className="glass-card p-10 text-center text-lg font-semibold">Page not found.</div></Shell>} />
     </Routes>
   )
 }
