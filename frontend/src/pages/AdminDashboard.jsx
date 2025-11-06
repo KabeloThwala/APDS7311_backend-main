@@ -48,6 +48,9 @@ export default function AdminDashboard() {
         <p className="text-sm font-semibold uppercase tracking-[0.4em] text-emerald-500 dark:text-emerald-200">Admin intelligence</p>
         <h1 className="text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">Enterprise operations dashboard</h1>
         <p className="max-w-3xl text-sm text-slate-600 dark:text-slate-300">Monitor key payment metrics, track workforce coverage and maintain complete visibility into customer onboarding activity.</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.4em] text-emerald-200">Admin intelligence</p>
+        <h1 className="text-3xl font-black text-white sm:text-4xl">Enterprise operations dashboard</h1>
+        <p className="max-w-3xl text-sm text-slate-300">Monitor key payment metrics, track workforce coverage and maintain complete visibility into customer onboarding activity.</p>
       </header>
 
       <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
@@ -61,6 +64,12 @@ export default function AdminDashboard() {
                 <span className="text-sm text-slate-500 dark:text-slate-200/70">cases</span>
               </div>
               <p className="text-sm text-slate-600 dark:text-slate-200/80">{card.description}</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-200/80">{card.label}</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black text-white">{card.value}</span>
+                <span className="text-sm text-slate-200/70">cases</span>
+              </div>
+              <p className="text-sm text-slate-200/80">{card.description}</p>
             </div>
           </div>
         ))}
@@ -77,6 +86,13 @@ export default function AdminDashboard() {
                 <div key={role} className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-slate-200">
                   <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-300">{role}</p>
                   <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">{roleBreakdown[role] || 0}</p>
+            <h2 className="text-xl font-semibold text-white">User base snapshot</h2>
+            <p className="text-sm text-slate-300">{users.length} active profiles across the digital banking ecosystem.</p>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {['admin', 'employee', 'customer'].map((role) => (
+                <div key={role} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-widest text-slate-300">{role}</p>
+                  <p className="mt-2 text-2xl font-bold text-white">{roleBreakdown[role] || 0}</p>
                 </div>
               ))}
             </div>
@@ -85,6 +101,8 @@ export default function AdminDashboard() {
         <div className="glass-card p-6">
           <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Operational guidance</h2>
           <ul className="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-200">
+          <h2 className="text-xl font-semibold text-white">Operational guidance</h2>
+          <ul className="mt-4 space-y-3 text-sm text-slate-200">
             <li className="flex gap-3">
               <span className="mt-1 inline-flex h-2 w-2 flex-shrink-0 rounded-full bg-emerald-300" />
               Review and approve pending payments to keep settlement cycles on track.
@@ -112,6 +130,16 @@ export default function AdminDashboard() {
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-slate-200 text-sm text-slate-700 dark:divide-white/10 dark:text-slate-200">
             <thead className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-300/80">
+        <div className="flex flex-col gap-3 border-b border-white/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-white">User directory</h2>
+            <p className="text-sm text-slate-300">Audit-ready overview of platform access.</p>
+          </div>
+          <span className="rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-slate-200">Updated {new Date().toLocaleTimeString()}</span>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-white/10 text-sm text-slate-200">
+            <thead className="text-xs uppercase tracking-widest text-slate-300/80">
               <tr>
                 <th className="px-6 py-3 text-left">Name</th>
                 <th className="px-6 py-3 text-left">Account</th>
@@ -130,6 +158,17 @@ export default function AdminDashboard() {
                   <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">{u.fullName}</td>
                   <td className="px-6 py-4">{u.accountNumber}</td>
                   <td className="px-6 py-4 text-slate-500 dark:text-slate-200/80">{u.role}</td>
+            <tbody className="divide-y divide-white/5">
+              {users.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="px-6 py-8 text-center text-slate-300">No users available.</td>
+                </tr>
+              )}
+              {users.map((u) => (
+                <tr key={u.id || u._id} className="transition hover:bg-white/5">
+                  <td className="px-6 py-4 font-semibold text-white">{u.fullName}</td>
+                  <td className="px-6 py-4">{u.accountNumber}</td>
+                  <td className="px-6 py-4 text-slate-200/80">{u.role}</td>
                   <td className="px-6 py-4">{new Date(u.createdAt).toLocaleString()}</td>
                 </tr>
               ))}
