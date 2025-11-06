@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Sidebar from './components/Sidebar.jsx'
 import RequireRole from './components/RequireRole.jsx'
@@ -15,11 +15,29 @@ import PaymentsAdmin from './pages/PaymentsAdmin.jsx'
 
 function Shell({ children }) {
   const { user } = useAuth()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
   return (
-    <div className="container">
-      {user && <Sidebar />}
-      <main className="content">
-        {children}
+    <div className="relative flex min-h-screen w-full overflow-hidden">
+      {user && (
+        <>
+          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="fixed left-5 top-5 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-slate-100 shadow-xl backdrop-blur-lg transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 lg:hidden"
+            aria-label="Open navigation menu"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </>
+      )}
+      <main className="relative z-10 flex w-full flex-1 justify-center px-4 py-10 sm:px-8 lg:px-12">
+        <div className="flex w-full max-w-6xl flex-col gap-8">
+          {children}
+        </div>
       </main>
     </div>
   )
@@ -68,7 +86,7 @@ export default function App() {
       }/>
 
       <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="*" element={<Shell><div className="card">Not found</div></Shell>} />
+      <Route path="*" element={<Shell><div className="glass-card p-10 text-center text-lg font-semibold">Page not found.</div></Shell>} />
     </Routes>
   )
 }
