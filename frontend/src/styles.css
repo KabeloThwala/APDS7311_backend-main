@@ -1,0 +1,69 @@
+
+:root {
+  --bg: #0b1020;
+  --card: #141b2e;
+  --muted: #8aa0c6;
+  --brand: #39c6b3;
+  --danger: #ef476f;
+  --success: #50fa7b;
+  --warning: #ffd166;
+  --text: #e9eefc;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(1000px 600px at 20% 0%, #14203b 0%, transparent 60%),
+              radial-gradient(800px 600px at 100% 10%, #0a3d5e 0%, transparent 55%),
+              var(--bg);
+}
+
+a { color: var(--brand); text-decoration: none; }
+.container { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+.sidebar {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding: 22px;
+}
+.brand { font-weight: 800; letter-spacing: .02em; }
+.nav-btn {
+  width: 100%; text-align: left; padding: 10px 12px; margin: 6px 0;
+  background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; color: var(--text); cursor: pointer;
+}
+.nav-btn.active { background: rgba(57,198,179,0.18); border-color: rgba(57,198,179,0.6); }
+.content { padding: 26px; }
+.card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px; padding: 18px; margin-bottom: 18px;
+}
+.grid { display: grid; gap: 16px; }
+.grid.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.grid.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+label { display:block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+input, select, textarea {
+  width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12);
+  background: #0e1529; color: var(--text);
+}
+button.primary {
+  background: var(--brand); color: #06251f; font-weight: 700; border: 0; padding: 10px 14px;
+  border-radius: 10px; cursor: pointer;
+}
+button.ghost {
+  background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.12);
+  padding: 10px 14px; border-radius: 10px; cursor:pointer;
+}
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; }
+.badge { padding: 4px 10px; border-radius: 999px; font-size: 12px; }
+.badge.pending { background: rgba(255,255,255,0.08); }
+.badge.verified { background: rgba(80,250,123,0.18); color: var(--success); }
+.badge.submitted { background: rgba(255,209,102,0.18); color: var(--warning); }
+.badge.rejected { background: rgba(239,71,111,0.18); color: var(--danger); }
+.form-row { margin-bottom: 12px; }
+.authbox { max-width: 420px; margin: 60px auto; }
+small.muted { color: var(--muted); }
