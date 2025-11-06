@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import api from '../utils/axiosClient'
+import { getStatusBadgeClass } from '../constants/statusStyles.js'
 
 const nextStates = ['verified', 'submitted', 'rejected']
 
@@ -180,6 +181,7 @@ export default function PaymentsAdmin() {
                   <td className="px-4 py-4">{r.currency}</td>
                   <td className="px-4 py-4">{r.provider}</td>
                   <td className="px-4 py-4">
+                    <span className={`status-badge ${getStatusBadgeClass(r.status)}`}>
                     <span className={`status-badge ${statusColors[r.status] || 'bg-slate-200 text-slate-700 dark:bg-white/10 dark:text-slate-200'}`}>
                       {r.status}
                     </span>

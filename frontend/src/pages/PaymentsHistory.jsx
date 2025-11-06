@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import api from '../utils/axiosClient'
+import { getStatusBadgeClass } from '../constants/statusStyles.js'
 
 const statusColors = {
   pending: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-200',
@@ -74,6 +75,9 @@ export default function PaymentsHistory() {
                 <td className="px-6 py-4">{r.currency}</td>
                 <td className="px-6 py-4">{r.provider}</td>
                 <td className="px-6 py-4">
+                  <span className={`status-badge ${getStatusBadgeClass(r.status)}`}>{r.status}</span>
+                </td>
+                <td className="px-6 py-4 text-slate-500 dark:text-slate-300">{r.reference || '—'}</td>
                   <span className={`status-badge ${statusColors[r.status] || 'bg-slate-200 text-slate-700 dark:bg-white/10 dark:text-slate-200'}`}>{r.status}</span>
                 </td>
                 <td className="px-6 py-4 text-slate-500 dark:text-slate-300">{r.reference || '—'}</td>
